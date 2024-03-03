@@ -1,0 +1,1 @@
+export {default as heroGirl} from "./eco.webp" 
