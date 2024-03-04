@@ -9,9 +9,9 @@ import { oneProductType } from "./utlis/productDataAndTypes";
 const SwiperComp: FC<{ ProductData: Array<IProduct > }> = ({
     ProductData,
   }) => {
-    //console.log('ProductData', ProductData);
+  
     let dataToItrate = ProductData.slice(2, 10);
-    //console.log("dataToItrate",dataToItrate);
+
     return (
         <div className="space-y-4 px-6 mt-24">
           <div className="text-center space-y-3">
