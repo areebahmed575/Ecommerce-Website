@@ -6,9 +6,12 @@ import { urlForImage } from '@/sanity/lib/image';
 import { Image as Iimage } from 'sanity';
 import Link from 'next/link';
 import Jwellery from './components/Jwellery';
-import Card from './components/Card';
+//import Card from './components/Card';
 import Newsletter from './components/Newsletter';
 import Footer from './components/Footer';
+import CardT from './components/CardT';
+import { oneProductType } from './components/utlis/productDataAndTypes';
+import ProductsCarousel from './components/ProductsCarousel';
 
 
 async function fetchProduct() {
@@ -49,14 +52,21 @@ export interface IProduct {
   productTypes: Array<string>,
   size: Array<string>,
   price: number,
-  image: Iimage,
+  //image: Iimage,
+  image: imagesType[];
 
 };
+export interface imagesType {
+  asset: assetImageType;
+  _type: string;
+  alt: string;
+  _key: string;
+}
 export interface responseType {
   result: Array<IProduct>
 }
 export default async function Home() {
-  let result: IProduct[] = await fetchProduct();
+  let result: Array<oneProductType> = await fetchProduct();
   console.log(result)
 
 
@@ -66,8 +76,11 @@ export default async function Home() {
 
       <Hero />
       <ProductText />
-      <Card data={result} />
-      {/* <Card /> */}
+      {/* <Card data={result} /> */}
+      {/* {result.map((product, index) => (
+        <CardT key={index} data={product} />
+      ))} */}
+      <ProductsCarousel ProductData={result} />
       <Jwellery />
       <Newsletter />
 
@@ -79,3 +92,6 @@ export default async function Home() {
 
   )
 }
+
+
+

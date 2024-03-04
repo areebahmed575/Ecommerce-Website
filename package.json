@@ -9,18 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@sanity/image-url": "^1.0.2",
+    "@sanity/vision": "^3.30.1",
     "next": "14.1.1",
-    "next-sanity": "^8.1.3",
+    "next-sanity": "^7.1.4",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.0.1",
-    "sanity": "^3.30.1"
+    "react-swiper": "^0.1.5",
+    "sanity": "^3.30.1",
+    "styled-components": "^6.1.8",
+    "swiper": "^11.0.7"
   },
   "devDependencies": {
     "@sanity/client": "^6.15.1",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/node": "^20.11.24",
+    "@types/react": "^18.2.61",
+    "@types/react-dom": "^18.2.19",
     "autoprefixer": "^10.0.1",
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
