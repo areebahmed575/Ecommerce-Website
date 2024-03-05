@@ -5,6 +5,7 @@ import { client } from "@/lib/sanityClient";
 import imageUrlBuilder from "@sanity/image-url";
 import { oneProductType } from "./utlis/productDataAndTypes";
 
+
 const builder = imageUrlBuilder(client);
 
 function urlFor(source: any) {
@@ -14,7 +15,7 @@ function urlFor(source: any) {
 const CardT: FC<{ singleProductData: oneProductType }> = ({
     singleProductData,
   }) => {
-    console.log("singleProductData",singleProductData)
+    //console.log("singleProductData",singleProductData)
     return (
       <div className=" space-y-3 select-none hover:scale-110 duration-300">
         <div className="relative w-full">

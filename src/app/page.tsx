@@ -67,7 +67,7 @@ export interface responseType {
 }
 export default async function Home() {
   let result: Array<oneProductType> = await fetchProduct();
-  console.log(result)
+  //console.log(result)
 
 
   return (

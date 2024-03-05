@@ -1,7 +1,7 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { Maven_Pro } from 'next/font/google'
-//import Navbar from './components/Navbar'
+import Navbar from './components/Navbar'
 import Wrapper from './components/Wrapper'
 import Footer from './components/Footer'
 //import TopLabel from './components/Toplabel'
@@ -27,7 +27,7 @@ export default function RootLayout({
           {/* <TopLabel /> */}
         </div>
         <Wrapper>
-          {/* <Navbar /> */}
+          <Navbar />
           <div className='min-h-screen'>
             {children}
           </div>
