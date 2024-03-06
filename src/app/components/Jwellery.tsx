@@ -1,6 +1,9 @@
+'use client'
 import React from 'react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation';
 const Jwellery = () => {
+    const router=useRouter()
     return (
         <div className='px-1 text-gray-700'>
             <div className=' md:text-5xl font-bold flex md:justify-end justify-start  text-4xl py-4 '>
@@ -38,7 +41,7 @@ const Jwellery = () => {
 
                     <div className='p-6 space-y-6 md:space-y-4'>
                         <p style={{ wordSpacing: "0.8rem" }} className="h-[90%] lg:max-w-[15rem]">This piece is ethically crafted in our small family-owned workshop in Peru with unmatched attention to detail and care. The Natural color is the actual natural color of the fiber, undyed and 100% traceable.</p>
-                        <button className="text-white bg-gray-900 rounded-md py-2 px-6">See All Products</button>
+                        <button className="text-white bg-gray-900 rounded-md py-2 px-6" onClick={()=>router.push("/products")}>See All Products</button>
 
 
                     </div>

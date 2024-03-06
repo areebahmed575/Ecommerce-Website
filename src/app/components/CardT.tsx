@@ -25,7 +25,7 @@ const CardT: FC<{ singleProductData: oneProductType }> = ({
             height={1000}
             src={urlFor(singleProductData.image)
               .url()}
-            alt={singleProductData.image.alt}
+            alt={"image"}
           />
         </div>
         <div className="space-y-1 text-gray-600 font-semibold text-lg select-none">
