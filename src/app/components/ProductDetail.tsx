@@ -5,15 +5,17 @@ import { FC } from 'react'
 import Image from 'next/image'
 import { urlForImage } from '@/sanity/lib/image'
 import { BsCart2 } from "react-icons/bs";
-import { carContext } from '../../global/context'
+//import { carContext } from '../../global/context'
 import PortableText from "react-portable-text";
 import toast, { Toaster } from 'react-hot-toast'
 import { client } from "@/lib/sanityClient"; 
 import imageUrlBuilder from "@sanity/image-url";
 import { oneProductType } from "./utlis/productDataAndTypes";
+import AddtoCartProduct from './addtoCartProduct'
+import { Product } from '@/redux/feature/cartSlice'
 
-const ProductDetail: FC<{ item: Array<IProduct> }> = ({ item }) => {
-  let { cartArray, userData, dispatch } = useContext(carContext)
+const ProductDetail: FC<{ item: Array<Product> }> = ({ item }) => {
+  //let { cartArray, userData, dispatch } = useContext(carContext)
 
   const [onClickImage, setClickImage] = useState<string>()
   const [quantity, setQuantity] = useState(1);
@@ -62,26 +64,26 @@ function urlFor(source: any) {
 
 
 
-  function handleAddToCart() {
-    let isExsits = cartArray.some((elem: any) => elem.product_id === productIdCart);
+  // function handleAddToCart() {
+  //   let isExsits = cartArray.some((elem: any) => elem.product_id === productIdCart);
 
-    if (userData) {
-      let dataToAddInCart = {
-        product_id: productIdCart,
-        quantity: quantity,
-        user_id: userData.uuid,
-        price: productPrice,
-      };
-      if (!isExsits) {
-        dispatch("addToCart", dataToAddInCart);
-      } else {
-        dispatch("updateCart", dataToAddInCart)
-      }
-      notification(productName);
-    } else {
-      notificationError("Please login first");
-    }
-  };
+  //   if (userData) {
+  //     let dataToAddInCart = {
+  //       product_id: productIdCart,
+  //       quantity: quantity,
+  //       user_id: userData.uuid,
+  //       price: productPrice,
+  //     };
+  //     if (!isExsits) {
+  //       dispatch("addToCart", dataToAddInCart);
+  //     } else {
+  //       dispatch("updateCart", dataToAddInCart)
+  //     }
+  //     notification(productName);
+  //   } else {
+  //     notificationError("Please login first");
+  //   }
+  // };
 
   return (
     <div>
@@ -114,27 +116,14 @@ function urlFor(source: any) {
                   ))}
                 </div>
               </div>
-              <div className="flex space-x-7">
-                <p className="font-semibold text-xl text-gray-800">Quantity:</p>
-                <div className="flex gap-2 items-center text-lg">
-                  <div
-                    onClick={decrementTheQuantity}
-                    className="select-none cursor-pointer flex justify-center items-center w-9 h-9 rounded-full bg-gray-200">-</div>
-                  <p>{quantity}</p>
-                  <div
-                    onClick={incrementTheQuantity}
-                    className="select-none cursor-pointer flex justify-center items-center w-9 h-9 rounded-full border border-gray-800">+</div>
-                </div>
+
+
+              <p className="text-2xl font-semibold">Price: ${item.price}{".00"}</p>
+              <AddtoCartProduct product={item} qty={1}  />
+              
               </div>
-              <div className="flex gap-x-8 items-center">
-                <button onClick={() => handleAddToCart()} className="flex items-center text-white bg-gray-900 border border-gray-500 px-4 py-2">
-                  <BsCart2 />
-                  &nbsp;
-                  &nbsp;
-                  Add to Cart
-                </button>
-                <p className="text-2xl font-semibold">${item.price}{".00"}</p>
-              </div>            </div>
+
+              
 
 
 

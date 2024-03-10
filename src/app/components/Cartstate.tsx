@@ -1,9 +1,30 @@
 import { carContext } from '@/global/context'
-import React from 'react'
+import React, { useState } from 'react'
 import { BsCart2 } from 'react-icons/bs'
 import { useContext } from "react"
-const Cartstate = () => {
-    //let {quantity } = useContext(carContext);
+import { useAppDispatch } from '@/redux/store'
+import { Product, cartAction } from '@/redux/feature/cartSlice'
+
+type IProps = {
+    porduct: Product;
+    qty: number;
+}
+
+const Cartstate = (props:IProps) => {
+    //let quantity = 0
+    const [qty,setQty] = useState(1)
+    const dispatch = useAppDispatch();
+
+    const subtract = () => {
+        if (qty > 1) {
+          setQty(qty - 1);
+        }
+      };
+
+
+    const addToCart = () =>{
+        dispatch(cartAction.addToCart({porduct: props.porduct,quantity: qty}))
+    }
     return (
         <div className="flex-shrink-0 relative w-11 h-11 bg-gray-300 rounded-full flex items-center justify-center">
             <div
@@ -11,7 +32,7 @@ const Cartstate = () => {
             >
                 {/* {quantity} */}
             </div>
-            <BsCart2 size={24} />
+            <BsCart2 size={24}  />
         </div>
     )
 }

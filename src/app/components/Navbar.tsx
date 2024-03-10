@@ -57,9 +57,9 @@ const Navbar = () => {
                 placeholder='Search in our store'
                 className='focus:outline-none pl-1 pr-5  flex-grow py-1 w-80' />
             </div>
-            <Link href={"/cart"}>
+            {/* <Link href={"/cart"}>
               <Cartstate />
-            </Link>
+            </Link> */}
 
           </div>
           <div onClick={() => setNavbarOpen(!navbarOpen)}>

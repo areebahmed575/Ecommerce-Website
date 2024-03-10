@@ -4,6 +4,7 @@ import { Maven_Pro } from 'next/font/google'
 import Navbar from './components/Navbar'
 import Wrapper from './components/Wrapper'
 import Footer from './components/Footer'
+import ReduxProvider from '@/utils/ReduxProvider'
 //import TopLabel from './components/Toplabel'
 const inter = Maven_Pro({
   subsets: ['latin'],
@@ -21,6 +22,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
+    <ReduxProvider>
     <html lang="en">
       <body className={inter.className}>
         <div className='overflow-hidden w-screen'>
@@ -34,8 +36,7 @@ export default function RootLayout({
           <Footer />
         </Wrapper>
       </body>
-
-
     </html>
+    </ReduxProvider>
   )
 }
