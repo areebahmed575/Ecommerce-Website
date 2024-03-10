@@ -13,7 +13,8 @@ import { GiHamburgerMenu } from "react-icons/gi"
 import { RxCross2 } from "react-icons/rx"
 import { useRouter } from 'next/navigation'
 //import ContextWrapper from '@/global/context'
-import Cartstate from './Cartstate'
+//import Cartstate from './Cartstate'
+import { useAppSelector } from '@/redux/store'
 
 const Navbar = () => {
 
@@ -26,6 +27,8 @@ const Navbar = () => {
       router.push(`/search/${searchQuery}`);
     }
   }
+
+  const totalItems = useAppSelector((state) => state.cart.totalQuantity);
   return (
     
       <div className="sticky top-0 backdrop-blur bg-opacityDownColor bg-white z-50">
@@ -60,6 +63,14 @@ const Navbar = () => {
             {/* <Link href={"/cart"}>
               <Cartstate />
             </Link> */}
+            <div className="flex-shrink-0 relative w-11 h-11 bg-gray-300 rounded-full flex items-center justify-center">
+            <div
+                className="w-4 h-4 absolute top-1 right-2 bg-red-400 text-xs font-light rounded-full flex justify-center items-center"
+            >
+                {totalItems ? totalItems : 0}
+            </div>
+            <BsCart2 size={24}  />
+        </div>
 
           </div>
           <div onClick={() => setNavbarOpen(!navbarOpen)}>
