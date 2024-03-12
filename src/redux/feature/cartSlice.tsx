@@ -18,8 +18,13 @@ export interface Product{
     size: Array<string>;
     productTypes: Array<string>;
     description: object[];
+    slug: any
     
 }
+
+export interface responseType {
+    result: Array<Product>
+  }
 
 
 interface CartState{
@@ -62,9 +67,35 @@ export const cartSlice = createSlice({
             
 
         },
+        removeProduct(state:CartState, action:PayloadAction<string>){
+            const productId = action.payload;
+            
+            state.items = state.items.filter((item) => item._id !== productId);   
+            state.totalQuantity = state.items.reduce((total,item)=> total + item.quantity, 0);
+            state.totalAmount = state.items.reduce((total, item)=> total + item.totalPrice, 0);
         
+        },
 
+        decrementCartProduct(state:CartState, action:PayloadAction<string>){
+            const Product = action.payload;
+            const existingItem = state.items.find((item) => item._id === Product);
+
+            state.totalQuantity--;
+            
+            state.totalAmount = state.totalAmount - existingItem?.price!;
+
+            if(existingItem?.quantity === 1){
+
+                state.items = state.items.filter((item)=> item._id !== Product);
+            } 
+            else {
+                existingItem!.quantity--;
+                existingItem!.totalPrice = existingItem!.totalPrice - existingItem?.price!;
+
+            }
         
+        }    
+
       },   
 
 })
@@ -73,3 +104,5 @@ export const cartSlice = createSlice({
 export const cartAction = cartSlice.actions;
 
 export default cartSlice.reducer;
+
+
