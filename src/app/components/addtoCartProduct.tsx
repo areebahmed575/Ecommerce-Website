@@ -8,7 +8,8 @@ import { Toaster, toast } from "react-hot-toast";
 import { useAppDispatch } from '@/redux/store'
 import { urlForImage } from "../../../sanity/lib/image";
 import { BsCart2 } from "react-icons/bs";
-
+import { client } from "@/lib/sanityClient"; 
+import imageUrlBuilder from "@sanity/image-url";
 type IProps = {
   product: Product;
   qty: number;
@@ -20,6 +21,12 @@ const AddtoCartProduct = (props: IProps) => {
   const dispatch = useAppDispatch();
   //const [quantity, setQuantity] = useState(1);
 
+  const builder = imageUrlBuilder(client);
+
+  function urlFor(source: any) {
+    return builder.image(source); 
+  }
+
     const subtract = () => {
         if (qty > 1) {
           setQty(qty - 1);
@@ -27,9 +34,41 @@ const AddtoCartProduct = (props: IProps) => {
       };
 
 
+      const handleAddToCart = async () => {
+        const res = await fetch(`/api/cart`, {
+          method: "POST",
+          body: JSON.stringify({
+            product_id: props.product._id,
+            quantity: qty,
+            image: urlFor(props.product.image).url(),
+            product_name: props.product.productName,
+            subcat: props.product.productTypes[1],
+            price: props.product.price,
+            total_price: props.product.price * qty,
+          }),
+        });
+    
+      };
+
+
     const addToCart = () =>{
+  
+        toast.promise(handleAddToCart(), {
+          loading: "Adding Data to Cart",
+          success:"Data added to Cart",
+          error: "Failed to add data"
+        })
         dispatch(cartAction.addToCart({product: props.product,quantity: qty}))
     }
+
+    const addtoCart = () => {
+      toast.promise(handleAddToCart(), {
+        loading: "Adding To Cart",
+        success: "Product added To Cart",
+        error: "Failed to Add Product to cart",
+      });
+      dispatch(cartAction.addToCart({ product: props.product, quantity: qty }));
+    };
 
     // function incrementTheQuantity() {
     //     setQuantity(quantity + 1);
