@@ -13,6 +13,7 @@ import imageUrlBuilder from "@sanity/image-url";
 type IProps = {
   product: Product;
   qty: number;
+  user_id : string
 };
 
 const AddtoCartProduct = (props: IProps) => {
@@ -34,6 +35,21 @@ const AddtoCartProduct = (props: IProps) => {
       };
 
 
+    const GetDataFromDb = async() => {
+      const res = await fetch(`/api/cart/${props.user_id}`);
+      if(!res.ok){
+        throw new Error("Failed to fetch data");
+      }
+      const data = await res.json();
+
+      return data;
+
+
+    };    
+
+
+
+
       const handleAddToCart = async () => {
         const res = await fetch(`/api/cart`, {
           method: "POST",
@@ -51,9 +67,48 @@ const AddtoCartProduct = (props: IProps) => {
       };
 
 
+      const handleCart = async () => {
+        
+        try {
+          const cartData = await GetDataFromDb();
+          const existingItem = cartData.cartItems.find(
+            (item: any) => item._id === props.product._id
+          );
+    
+          if (existingItem) {
+            const newQuantity = existingItem.quantity + qty;
+            const newPrice = props.product.price * newQuantity;
+            const res = await fetch(`/api/cart`,
+              {
+                method: "PUT",
+                body: JSON.stringify({
+                  product_id: props.product._id,
+                  quantity: newQuantity,
+                  price: newPrice,
+                }),
+              }
+            );
+    
+            if (!res.ok) {
+              throw new Error("Failed to update data");
+            }
+          } else {
+            await handleAddToCart();
+          }
+        } catch (error) {
+          console.log(error);
+        }
+    
+        
+      };  
+
+
+
+
+
     const addToCart = () =>{
   
-        toast.promise(handleAddToCart(), {
+        toast.promise(handleCart(), {
           loading: "Adding Data to Cart",
           success:"Data added to Cart",
           error: "Failed to add data"

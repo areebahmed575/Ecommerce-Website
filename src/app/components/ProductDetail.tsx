@@ -19,6 +19,7 @@ const ProductDetail: FC<{ item: Array<Product> }> = ({ item }) => {
 
   const [onClickImage, setClickImage] = useState<string>()
   const [quantity, setQuantity] = useState(1);
+  const user_id = "123378injc"
   let productPrice = item.map((item) => (
     item.price
 
@@ -119,7 +120,7 @@ function urlFor(source: any) {
 
 
               <p className="text-2xl font-semibold">Price: ${item.price}{".00"}</p>
-              <AddtoCartProduct product={item} qty={1}  />
+              <AddtoCartProduct product={item} qty={1} user_id={user_id} />
               
               </div>
 
