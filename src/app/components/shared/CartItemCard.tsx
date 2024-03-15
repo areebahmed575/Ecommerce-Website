@@ -6,6 +6,8 @@ import { BsTrash } from "react-icons/bs";
 import { cartAction } from "@/redux/feature/cartSlice";
 import { useState } from "react";
 import Image from "next/image";
+import { client } from "@/lib/sanityClient"; 
+import imageUrlBuilder from "@sanity/image-url";
 
 interface Props {
   cartItem: Product;
@@ -15,13 +17,19 @@ const CartItemCard = ({ cartItem }: Props) => {
   const [qty, setQty] = useState(cartItem.quantity);
   const dispatch = useAppDispatch();
 
+  const builder = imageUrlBuilder(client);
+
+  function urlFor(source: any) {
+     return builder.image(source);
+  }
+
   const handleCart = async (newQty: number) => {
     const newPrice = cartItem.price * newQty;
 
     try {
       if (newQty) {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/cart`,
+          `/api/cart`,
           {
             method: "PUT",
             body: JSON.stringify({
@@ -38,12 +46,12 @@ const CartItemCard = ({ cartItem }: Props) => {
         throw new Error("Failed to fetch update");
       }
     } catch (error) {
-      console.log((error as { message: string }).message);
+      console.log(error);
     }
   };
 
   const handleDelete = async () => {
-    await fetch(`/api/cart/removeitem/${cartItem._id}`, {
+    await fetch(`/api/cart?product_id=${cartItem._id}`, {
       method: "DELETE",
     });
   };
@@ -66,7 +74,7 @@ const CartItemCard = ({ cartItem }: Props) => {
         error: "Failed to Decrease quantity",
       });
       setQty(qty - 1);
-    //   dispatch(cartAction.removeFromCart(cartItem._id));
+      dispatch(cartAction.decrementCartProduct(cartItem._id));
     }
   };
 
@@ -84,7 +92,7 @@ const CartItemCard = ({ cartItem }: Props) => {
       <div className="">
         <Image
           // @ts-ignore
-          src={cartItem.image}
+          src={urlFor(cartItem.image).url()}
           alt={cartItem.productName}
           width={250}
           height={250}
@@ -98,7 +106,7 @@ const CartItemCard = ({ cartItem }: Props) => {
             <BsTrash size={25} className="cursor-pointer" />
           </button>
         </div>
-        <h5 className="font-semibold my-2 text-gray-400">{cartItem.subcat}</h5>
+        <h5 className="font-semibold my-2 text-gray-400">{cartItem.productTypes[1]}</h5>
         <p className="flex flex-col gap-5 my-1 font-semibold text-base">
           Delivery Estimation
           <span className="text-yellow-500">5 Working Days</span>
