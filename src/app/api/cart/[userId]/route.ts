@@ -4,14 +4,14 @@ import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
 
-export const GET = async (request:NextRequest,{params:{user_id}}:{params : {user_id : string}}) =>{
+export const GET = async (request:NextRequest,{params:{userId}}:{params : {userId : string}}) =>{
 
     try{
-        if(!user_id){
+        if(!userId){
             throw new Error("UserId does not exists");
         }
         else{
-            const res:Cart[] = await db.select().from(cartTable).where(eq(cartTable.user_id, user_id));
+            const res:Cart[] = await db.select().from(cartTable).where(eq(cartTable.user_id, userId));
             const cartItems = res.map((item) => ({
                 _id: item.product_id,
                 name: item.product_name,

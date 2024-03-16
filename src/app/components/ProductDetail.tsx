@@ -1,4 +1,3 @@
-"use client"
 import React, { use, useContext, useState } from 'react'
 import { IProduct, imagesType } from '../page'
 import { FC } from 'react'
@@ -13,54 +12,58 @@ import imageUrlBuilder from "@sanity/image-url";
 import { oneProductType } from "./utlis/productDataAndTypes";
 import AddtoCartProduct from './addtoCartProduct'
 import { Product } from '@/redux/feature/cartSlice'
+import { auth } from '@clerk/nextjs'
 
 const ProductDetail: FC<{ item: Array<Product> }> = ({ item }) => {
   //let { cartArray, userData, dispatch } = useContext(carContext)
 
-  const [onClickImage, setClickImage] = useState<string>()
-  const [quantity, setQuantity] = useState(1);
-  const user_id = "123378injc"
-  let productPrice = item.map((item) => (
-    item.price
+  //const [onClickImage, setClickImage] = useState<string>()
+  //const [quantity, setQuantity] = useState(1);
+  //const user_id = "123378injc"
+  const { userId:user_id } = auth()
+  
 
-  ))
-
-  const builder = imageUrlBuilder(client);
+const builder = imageUrlBuilder(client);
 
 function urlFor(source: any) {
     return builder.image(source);
 }
 
-  let productIdCart = item.map((item) => (
-    item._id
+// let productPrice = item.map((item) => (
+//   item.price
 
-  ))
-  let productName = item.map((item) => (
-    item.productName
+// ))
 
-  ))
-  function incrementTheQuantity() {
-    setQuantity(quantity + 1);
+  // let productIdCart = item.map((item) => (
+  //   item._id
 
-  };
+  // ))
+  // let productName = item.map((item) => (
+  //   item.productName
 
-  function decrementTheQuantity() {
-    if (quantity !== 0) {
-      setQuantity(quantity - 1);
-    }
-  };
-  const notification = (title: string[]) => {
-    toast(` ${quantity} ${title} added to Cart`, {
-      icon: '👏',
-      position: "top-right"
-    })
-  };
+  // ))
+  // function incrementTheQuantity() {
+  //   setQuantity(quantity + 1);
 
-  const notificationError = (title: string) => {
-    toast(title, {
-      position: "top-right"
-    })
-  };
+  // };
+
+  // function decrementTheQuantity() {
+  //   if (quantity !== 0) {
+  //     setQuantity(quantity - 1);
+  //   }
+  // };
+  // const notification = (title: string[]) => {
+  //   toast(` ${quantity} ${title} added to Cart`, {
+  //     icon: '👏',
+  //     position: "top-right"
+  //   })
+  // };
+
+  // const notificationError = (title: string) => {
+  //   toast(title, {
+  //     position: "top-right"
+  //   })
+  // };
 
 
 
@@ -120,7 +123,7 @@ function urlFor(source: any) {
 
 
               <p className="text-2xl font-semibold">Price: ${item.price}{".00"}</p>
-              <AddtoCartProduct product={item} qty={1} user_id={user_id} />
+              <AddtoCartProduct product={item} qty={1} user_id={user_id as string} />
               
               </div>
 

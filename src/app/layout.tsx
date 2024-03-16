@@ -5,6 +5,7 @@ import Navbar from './components/Navbar'
 import Wrapper from './components/Wrapper'
 import Footer from './components/Footer'
 import ReduxProvider from '@/utils/ReduxProvider'
+import { ClerkProvider } from '@clerk/nextjs'
 //import TopLabel from './components/Toplabel'
 const inter = Maven_Pro({
   subsets: ['latin'],
@@ -22,6 +23,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
+    <ClerkProvider>
     <ReduxProvider>
     <html lang="en">
       <body className={inter.className}>
@@ -38,5 +40,6 @@ export default function RootLayout({
       </body>
     </html>
     </ReduxProvider>
+    </ClerkProvider>
   )
 }
