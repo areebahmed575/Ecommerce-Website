@@ -5,7 +5,7 @@ import Navbar from './components/Navbar'
 import Wrapper from './components/Wrapper'
 import Footer from './components/Footer'
 import ReduxProvider from '@/utils/ReduxProvider'
-import { ClerkProvider } from '@clerk/nextjs'
+import { ClerkProvider,auth } from '@clerk/nextjs'
 //import TopLabel from './components/Toplabel'
 const inter = Maven_Pro({
   subsets: ['latin'],
@@ -22,6 +22,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
+  const {userId} = auth()
   return (
     <ClerkProvider>
     <ReduxProvider>
@@ -31,7 +33,7 @@ export default function RootLayout({
           {/* <TopLabel /> */}
         </div>
         <Wrapper>
-          <Navbar />
+          <Navbar userId={userId as string} />
           <div className='min-h-screen'>
             {children}
           </div>

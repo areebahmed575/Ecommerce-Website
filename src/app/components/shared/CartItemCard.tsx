@@ -101,12 +101,12 @@ const CartItemCard = ({ cartItem }: Props) => {
       </div>
       <div className="flex flex-col justify-between items-start w-full">
         <div className="flex justify-between items-center w-80 sm:w-full flex-initial">
-          <h4>{cartItem.productName}</h4>
+          <h4>{cartItem.name ? cartItem.name :  cartItem.productName}</h4>
           <button onClick={rmProduct}>
             <BsTrash size={25} className="cursor-pointer" />
           </button>
         </div>
-        <h5 className="font-semibold my-2 text-gray-400">{cartItem.productTypes[1]}</h5>
+        <h5 className="font-semibold my-2 text-gray-400"> {cartItem.subcat ? cartItem.subcat : cartItem.productTypes[1] }</h5>
         <p className="flex flex-col gap-5 my-1 font-semibold text-base">
           Delivery Estimation
           <span className="text-yellow-500">5 Working Days</span>

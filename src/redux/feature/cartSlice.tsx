@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Image } from "sanity";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
@@ -19,6 +19,7 @@ export interface Product{
     productTypes: Array<string>;
     description: object[];
     slug: any
+    name:string
     
 }
 
@@ -31,15 +32,37 @@ interface CartState{
     items:  Array<Product>
     totalAmount: number;
     totalQuantity: number;
+    isLoading: boolean;
+    error: any;
 
 } 
 
 const initialState: CartState = {
     items: [],
     totalAmount: 0,
-    totalQuantity: 0
+    totalQuantity: 0,
+    isLoading: false,
+    error: null,
 
 }    
+
+
+export const fetchData = createAsyncThunk(
+    "cart/fetchdata",
+    async (userId: string) => {
+        const res = await fetch(`/api/cart/${userId}`);
+        if(!res.ok){
+            console.log("Failed to get data");
+        }
+        const data = await res.json();
+
+        return data;
+    }    
+)
+
+
+
+
 
 export const cartSlice = createSlice({
     name : "cart",
@@ -97,6 +120,26 @@ export const cartSlice = createSlice({
         }    
 
       },   
+     
+      extraReducers: (builder) => {
+        // handle async actions with builder methods
+        builder.addCase(fetchData.pending, (state) => {
+          // set loading state to true
+          state.isLoading = true;
+        });
+        builder.addCase(fetchData.fulfilled, (state, action) => {
+          const { cartItems, totalQuantity, totalAmount } = action.payload;
+          state.items = cartItems;
+          state.totalAmount = totalAmount;
+          state.totalQuantity = totalQuantity;
+          state.isLoading = false;
+        });
+        builder.addCase(fetchData.rejected, (state, action) => {
+          // set loading state to false and error state to true
+          state.isLoading = false;
+          state.error = action.error;
+        });
+      },  
 
 })
 

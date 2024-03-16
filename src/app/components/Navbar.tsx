@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import Image from 'next/image'
 import { Arraynavbar, type } from './Arraynavbar'
 import Link from 'next/link'
@@ -14,15 +14,25 @@ import { RxCross2 } from "react-icons/rx"
 import { useRouter } from 'next/navigation'
 //import ContextWrapper from '@/global/context'
 //import Cartstate from './Cartstate'
-import { useAppSelector } from '@/redux/store'
+import { useAppDispatch, useAppSelector } from '@/redux/store'
 import { UserButton } from "@clerk/nextjs";
+import { fetchData } from '@/redux/feature/cartSlice'
 
-const Navbar = () => {
+const Navbar = ({userId}: {userId: string}) => {
 
   const [cart, setCart] = useState<number>(0)
   const router = useRouter();
   const [navbarOpen, setNavbarOpen] = useState<boolean>(false)
   const [searchQuery, setSearchQuery] = useState("");
+
+  
+  const dispatch = useAppDispatch();
+  
+  useEffect(()=>{
+    dispatch(fetchData(userId));
+
+  },[dispatch,userId]);
+
   function handleSerachCalledFunc(e: any) {
     if (e.key === "Enter" && e.keyCode === 13) {
       router.push(`/search/${searchQuery}`);
