@@ -10,7 +10,7 @@ import { Toaster, toast } from "react-hot-toast";
 import { useAppSelector } from "@/redux/store";
 import { useRouter } from "next/navigation";
 import CartItemCard from "../components/shared/CartItemCard";
-
+import StripeCheckOutButton from "../components/shared/CheckOut";
 // const CartDataLoadingFromApi = () => {
 //   return (
 //     <Wrapper>
@@ -58,7 +58,9 @@ if (cartItems.length > 0) {
                 </div>
               </div>
               <div>
-                {/* <StripeCheckOutButton products={cartItems} /> */}
+                
+                {/* <StripeCheckOutButton />  */}
+                <StripeCheckOutButton products={cartItems} /> 
               </div>
             </div>
           </div>
