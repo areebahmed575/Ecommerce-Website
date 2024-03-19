@@ -29,9 +29,7 @@ async function fetchAllProductsData(slug: string) {
 
 export async function generateStaticParams() {
     let res = await fetch(`https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2023-06-08/data/query/production?query=*[_type == "testing"]`, {
-        next: {
-            revalidate: 60
-        }
+
     }).then((res: any) => res.json())
     return res.result.map((item: Product) => { slug: item.slug });
 };
