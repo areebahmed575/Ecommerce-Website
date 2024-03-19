@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 const Jwellery = () => {
     const router=useRouter()
     return (
-        <div className='px-1 text-gray-700'>
+        <div className='px-1 text-gray-700 mt-36'>
             <div className=' md:text-5xl font-bold flex md:justify-end justify-start  text-4xl py-4 '>
                 <h6 className='max-w-[27rem]'>Unique and Authentic Vintage Designer Jewellery</h6>
             </div>
