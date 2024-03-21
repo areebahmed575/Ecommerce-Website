@@ -6,6 +6,7 @@ import CardAll from '@/app/components/CardAll';
 import AllProductsCompo from '../components/AllProduct'
 import { oneProductType } from '../components/utlis/productDataAndTypes';
 async function fetchAllProductsData() {
+  await new Promise(resolve => setTimeout(resolve, 2000));
   let res = await fetch(`https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2022-03-07/data/query/production?query=*%5B_type+%3D%3D+%22testing%22%5D`, {
     next: {
       revalidate: 60
